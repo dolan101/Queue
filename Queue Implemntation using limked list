@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Qnode{
+	int data;
+	struct Qnode *next;
+	};
+struct Queue{
+	struct Qnode *front, *rear;
+	};
+struct Qnode *newnode(int k)
+{
+	struct Qnode *new=(struct Qnode*)malloc(sizeof(struct Qnode));
+	new->data=k;
+	new->next=NULL;
+	return new;
+	}
+struct Queue *CreateQueue(){
+	struct Queue*q=(struct Queue*)malloc(sizeof(struct Queue));
+	q->front=q->rear=NULL;
+	return q;
+	}
+void EnQueue(struct Queue*q,int k)
+{
+	struct Qnode *temp=newnode(k);
+	if(q->rear==NULL)
+		{
+		q->rear=q->front=temp;
+		return;
+		}
+	else{
+	q->rear->next=temp;
+	q->rear=temp;}
+	}
+struct Qnode*deQueue(struct Queue*q)
+{
+	struct Qnode*temp;
+	if(q->rear==NULL)
+		return NULL;
+	temp=q->front;
+	q->front=q->front->next;
+	if(q->front=NULL)
+		q->rear=NULL;
+	return temp;
+	}
+int main()
+{	struct Queue*q=CreateQueue();
+	//EnQueue(q,15);
+	EnQueue(q,12);
+	EnQueue(q,101);
+	struct Qnode*n=deQueue(q);
+	printf("The dequeued item is %d\n",n->data);
+	return 0;
+	}
+	
